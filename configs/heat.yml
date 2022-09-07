@@ -1,0 +1,71 @@
+gpu: 2
+
+data:
+  name: 'heat'
+  root: './data/heat/'
+  train_name: 'heat_train_t51'
+  test_name: 'heat_test_t51'
+  ch: 1
+  train_batch_size: 20
+  test_batch_size: 20
+  t_resolution: 51
+  x_resolution: 1024
+  sorted_as: 'btx'
+  gif_value_lim: [-0.5, 0.5]
+
+train:
+  T_in: [0, 1]
+  T_out: [1, 51]
+  loss_fn: 'rel_l2'
+  epochs: 2000
+  eval_freq: 5
+  gif_freq: 100
+  save_freq: 100
+  archive_freq: 1000
+  optimizer:
+    name: 'adam'
+    lr: 1.0e-3
+    weight_decay: 0.
+    scheduler: 'steplr'
+    step_size: 100
+    gamma: 0.8
+    lowest_lr: 0.
+    step_unit: 'epoch'
+
+ctfno1d:
+  modes: [64]
+  num_blocks: 2
+  width: 64
+  pad_ratio: [64]
+  act: 'gelu' 
+  C: 10
+  mid_ch: 512
+  freq_ch: 128
+  emb_heads: 4
+
+nf:
+  n_layers: 32
+  n_hidden_dims: 128
+  n_hidden_layers: 2
+  time_net: 'TimeFourier'
+  time_hidden: 32
+  activation: 'ReLU'
+  final_activation: 'Identity'
+
+node:
+  n_layers: 3
+  n_hidden: 1024
+
+fno1d:
+  modes: [64]
+  num_blocks: 4
+  width: 64
+  pad_ratio: [64]
+  act: 'gelu'
+
+fno2d:
+  modes: [64, 16]
+  num_blocks: 3
+  width: 32
+  pad_ratio: [64, 16]
+  act: 'gelu'

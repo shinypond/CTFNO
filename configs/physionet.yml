@@ -1,0 +1,55 @@
+gpu: 2
+
+data:
+  name: 'physionet'
+  ch: 1
+  num: 8000
+  quantization: 0.016
+  extrap: False # interp: False, pred: True
+  sample_tp: 1 # subsample: 0 (= 0 %) ~ 1 (= 100 %)
+  n_labels: 1
+  train_batch_size: 50
+  test_batch_size: 50
+
+train:
+  epochs: 200 # if pred, epoch 50
+  latent_loss_type: 'iwae+100*ce'
+  classify_per_tp: False # PhysioNet: False, Activity: True
+  linear_classifier: False # PhysioNet: False, Activity: True
+  eval_freq: 1
+  save_freq: 100
+  archive_freq: 1000
+  optimizer:
+    name: 'adamax'
+    lr: 1.0e-2
+    weight_decay: 0.
+    scheduler: 'steplr'
+    step_size: 1
+    gamma: 1.
+    lowest_lr: 1.0e-3
+    step_unit: 'batch'
+
+encoder:
+  input_dim: 41
+  rec_dim: 40
+  latent_dim: 20
+
+ctfno1d:
+  modes: [10]
+  num_blocks: 1
+  width: 32
+  pad_ratio: [10]
+  act: 'gelu'
+  C: 1000
+  mid_ch: 64
+  freq_ch: 8 
+  emb_heads: 1
+  t_multiplier: 1000
+  
+nf:
+  layers: 2
+  hidden_dim: 50
+  hidden_layers: 3
+  time_net: 'TimeLinear'
+  time_hidden_dim: 8
+  

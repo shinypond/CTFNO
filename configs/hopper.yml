@@ -1,0 +1,67 @@
+gpu: 3
+
+data:
+  name: 'hopper'
+  ch: 1
+  num: 10000
+  timepoints: 100
+  extrap: True # interp: False, pred: True
+  sample_tp: 0.5 # subsample: 0 (= 0 %) ~ 1 (= 100 %)
+  train_batch_size: 50
+  test_batch_size: 50
+
+train:
+  epochs: 300
+  latent_loss_type: 'iwae'
+  eval_freq: 1
+  save_freq: 100
+  archive_freq: 1000
+  optimizer:
+    name: 'adamax'
+    lr: 1.0e-2
+    weight_decay: 0.
+    scheduler: 'steplr'
+    step_size: 1
+    gamma: 1.
+    lowest_lr: 1.0e-3
+    step_unit: 'batch'
+
+encoder:
+  input_dim: 14
+  rec_dim: 100
+  latent_dim: 20
+
+ctfno1d:
+  modes: [10]
+  num_blocks: 3
+  width: 32
+  pad_ratio: [10]
+  act: 'gelu'
+  C: 10
+  mid_ch: 64
+  freq_ch: 32
+  emb_heads: 1
+  t_multiplier: 1000
+  
+nf:
+  layers: 2
+  hidden_dim: 100
+  hidden_layers: 2
+  time_net: 'TimeLinear'
+  time_hidden_dim: 8
+
+nfrnn:
+  layers: 2
+  hidden_dim: 100
+  hidden_layers: 2
+  time_net: 'TimeLinear'
+  time_hidden_dim: 8
+
+node:
+  gen_layers: 3
+  hidden_units: 300
+
+odernn:
+  rec_layers: 3
+  hidden_units: 100
+  

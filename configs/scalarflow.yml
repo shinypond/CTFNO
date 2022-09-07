@@ -1,0 +1,55 @@
+gpu: 0
+
+data:
+  name: 'scalarflow'
+  root: './data/scalarflow/'
+  train_name: 'ScalarFlow_density_train'
+  test_name: 'ScalarFlow_density_test'
+  ch: 20
+  train_batch_size: 20
+  test_batch_size: 5
+  t_resolution: 71
+  x_resolution: 60
+  y_resolution: 160
+  crop: [[20, 80], [0, 160]]
+  t_start: 0
+  t_stride: 5
+  sorted_as: 'btxy'
+  gif_value_lim: 'none'
+  y_sub: 5
+
+train:
+  T_in: [0, 20]
+  T_out: [20, 71]
+  loss_fn: 'mse'
+  epochs: 100
+  eval_freq: 5
+  gif_freq: 100
+  save_freq: 100
+  archive_freq: 1000
+  optimizer:
+    name: 'adam'
+    lr: 1.0e-3 
+    weight_decay: 0.
+    scheduler: 'steplr'
+    step_size: 100
+    gamma: 0.8
+    lowest_lr: 0.
+    step_unit: 'epoch'
+
+ctfno2d:
+  modes: [20, 30]
+  num_blocks: 3
+  width: 32
+  pad_ratio: [60, 160]
+  act: 'gelu' 
+  C: 1.2
+  mid_ch: 128
+  freq_ch: 64 
+  emb_heads: 1
+  weight_heads: 32
+
+anode:
+  n_layers: 3
+  n_hidden: 256
+  aug: 31

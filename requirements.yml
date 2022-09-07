@@ -1,0 +1,23 @@
+name: ctfno
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.9
+  - pytorch::pytorch=1.11.0
+  - pytorch::torchvision
+  - cudatoolkit=11.3
+  - tqdm
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - einops
+  - pip
+  - pip:
+    - tensorboard
+    - stribor
+    - torchdiffeq
+    - pyyaml
+    
